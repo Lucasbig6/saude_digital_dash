@@ -1,0 +1,12 @@
+{
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"DAX query executed successfully, returned 2 rows in 55ms\",\"operation\":\"EXECUTE\",\"data\":{\"success\":true,\"rowCount\":2,\"columns\":[{\"name\":\"tb_atendimentos_telemedicina[tipo_produto]\",\"dataType\":\"String\",\"isNullable\":true,\"ordinal\":0},{\"name\":\"[Qtd]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":1}],\"rows\":[{\"tb_atendimentos_telemedicina[tipo_produto]\":\"Teleconsulta\",\"[Qtd]\":340433},{\"tb_atendimentos_telemedicina[tipo_produto]\":\"Telediagn\\u00F3stico\",\"[Qtd]\":1124817}],\"executionTimeMs\":55}}"
+      }
+    ]
+  },
+  "id": 3,
+  "jsonrpc": "2.0"
+}

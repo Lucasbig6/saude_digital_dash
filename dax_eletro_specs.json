@@ -1,0 +1,12 @@
+{
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"DAX query executed successfully, returned 2 rows in 13ms\",\"operation\":\"EXECUTE\",\"data\":{\"success\":true,\"rowCount\":2,\"columns\":[{\"name\":\"tb_atendimentos_telemedicina[profissional_espec]\",\"dataType\":\"String\",\"isNullable\":true,\"ordinal\":0},{\"name\":\"[Qtd]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":1}],\"rows\":[{\"tb_atendimentos_telemedicina[profissional_espec]\":\"Eletrocardiograma\",\"[Qtd]\":399263},{\"tb_atendimentos_telemedicina[profissional_espec]\":\"Eletroencefalograma\",\"[Qtd]\":990}],\"executionTimeMs\":13}}"
+      }
+    ]
+  },
+  "id": 4,
+  "jsonrpc": "2.0"
+}

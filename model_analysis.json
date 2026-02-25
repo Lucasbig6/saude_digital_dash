@@ -1,0 +1,317 @@
+{
+  "tables": [
+    {
+      "name": "tb_atendimentos_telemedicina",
+      "columns": 64,
+      "measures": 43,
+      "hidden": false
+    },
+    {
+      "name": "geojs-22-mun (6)",
+      "columns": 8,
+      "measures": 0,
+      "hidden": false
+    },
+    {
+      "name": "Todas_Colunas",
+      "columns": 24,
+      "measures": 0,
+      "hidden": false
+    },
+    {
+      "name": "Horario de Atualização",
+      "columns": 1,
+      "measures": 0,
+      "hidden": false
+    },
+    {
+      "name": "macrorregiões",
+      "columns": 11,
+      "measures": 0,
+      "hidden": false
+    },
+    {
+      "name": "Populacao",
+      "columns": 13,
+      "measures": 0,
+      "hidden": false
+    }
+  ],
+  "measures": {
+    "tb_atendimentos_telemedicina": [
+      {
+        "name": "Quantidade de Atendimentos",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Atendimentos Telediagnóstico",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Quantidade de Municípios",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Total Atendimentos",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Atualizado em",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Atendimentos Mês Atual",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Atendimentos Mês Anterior",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Variação Atendimentos",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Especialidade Maior Aumento",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Especialidade Destaque",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Deviation Atendimentos",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Total Atendimentos Mês Anterior",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Deviation %",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Scroller Deviation",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Data do Primeiro Registro",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Data do Ultimo de Registro",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Quantidade de Atendimentos Cliníco Geral",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Atendimentos não Médicos",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Estabelecimentos Ativos",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Meta de Municipios",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Slider Imagens Programa",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Principais resultados",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "quantidade de especialidade",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Atendimentos por regiões do Piaui",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Mapa de Atendimentos",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Quantidade de Profissionais",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Municípios com Atendimentos",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Total de Municipios",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Cobertura de Atendimento (%)",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Teleconsultas",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Telediagnóstico",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Atendimentos por Região de Saúde",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Distribuição de Atendimentos por Etnia do Paciente",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Telediagnóstico por Especialidade",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Comparativo de Atendimentos por Sexo",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Comparativo por Faixa Etária e Sexo",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Teleconsultas por Especialidade",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Linha Histórica de Atendimentos",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Atendimentos por Macrorregião",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Distribuição de Atendimentos por Esfera Administrativa",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Taxa por 10.000 hab",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "Distribuição de Atendimentos por Dia da Semana",
+        "expression": null,
+        "format": null
+      },
+      {
+        "name": "% Atendimentos",
+        "expression": null,
+        "format": null
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "from": "tb_atendimentos_telemedicina.data_registro",
+      "to": "LocalDateTable_a2b29ce7-1fa6-45c2-8e98-081c8da3b8bf.Date",
+      "crossFilter": "OneDirection",
+      "active": true
+    },
+    {
+      "from": "Horario de Atualização.Horario de Atualização",
+      "to": "LocalDateTable_7ad4fe7e-b538-46f4-acc3-bd25550a5d16.Date",
+      "crossFilter": "OneDirection",
+      "active": true
+    },
+    {
+      "from": "tb_atendimentos_telemedicina.cod_ibge_municipio",
+      "to": "geojs-22-mun (6).features.properties.id",
+      "crossFilter": "OneDirection",
+      "active": false
+    },
+    {
+      "from": "tb_atendimentos_telemedicina.codigo_municipio",
+      "to": "macrorregiões.Codigo Municipio",
+      "crossFilter": "OneDirection",
+      "active": true
+    },
+    {
+      "from": "geojs-22-mun (6).features.properties.id - Copiar",
+      "to": "macrorregiões.Codigo Municipio",
+      "crossFilter": "BothDirections",
+      "active": true
+    },
+    {
+      "from": "tb_atendimentos_telemedicina.cod_ibge_municipio",
+      "to": "Populacao.codigo_ibge",
+      "crossFilter": "OneDirection",
+      "active": true
+    }
+  ],
+  "columns_summary": {
+    "tb_atendimentos_telemedicina": [
+      null
+    ],
+    "geojs-22-mun (6)": [
+      null
+    ],
+    "Todas_Colunas": [
+      null
+    ],
+    "Horario de Atualização": [
+      null
+    ],
+    "macrorregiões": [
+      null
+    ],
+    "Populacao": [
+      null
+    ]
+  }
+}

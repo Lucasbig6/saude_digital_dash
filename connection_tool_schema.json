@@ -1,0 +1,98 @@
+{
+  "name": "connection_operations",
+  "description": "Perform operations on Microsoft tabular semantic model data source connections (PowerBI Desktop, Analysis Services, Fabric). Supported operations: Help, Connect, ConnectFabric, Disconnect, GetConnection, ListConnections, ListLocalInstances, RenameConnection, ClearLastUsed, GetLastUsed, SetLastUsed. Use the Operation parameter to specify which operation to perform.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "request": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "description": "The operation to perform: Help, Connect, ConnectFabric, ConnectFolder, Disconnect, GetConnection, ListConnections, ListLocalInstances, RenameConnection, ClearLastUsed, GetLastUsed, SetLastUsed",
+            "type": "string"
+          },
+          "connectionName": {
+            "description": "Connection name (required for Disconnect, RenameConnection, SetLastUsed operations) - Cannot be supplied for Connect or ConnectFabric operations as the name is always auto-generated",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "connectionString": {
+            "description": "Connection string (required only for Connect operation) - Can connect to PowerBI Desktop, XML/A endpoint, or Analysis Services",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dataSource": {
+            "description": "Local server (Desktop) instance, XML/A endpoint, or on-prem SSAS server, e.g. localhost:<port>, powerbi://api.powerbi.com/v1.0/myorg/workspace, or server.domain.com",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "initialCatalog": {
+            "description": "Dataset name or database name",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "oldConnectionName": {
+            "description": "Old connection name (required for RenameConnection operation)",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "newConnectionName": {
+            "description": "New connection name (required for RenameConnection operation)",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "workspaceName": {
+            "description": "Fabric workspace name (required for ConnectFabric operation) - exact name match",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "semanticModelName": {
+            "description": "Fabric semantic model name (required for ConnectFabric operation) - exact name match",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "tenantName": {
+            "description": "Tenant name for B2B/guest user scenarios (optional for ConnectFabric operation) - defaults to 'myorg'",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "clearCredential": {
+            "description": "Whether to clear cached credentials before connecting (forces fresh authentication)",
+            "type": "boolean"
+          },
+          "folderPath": {
+            "description": "Folder path for ConnectFolder operation - must contain database.tmdl either directly or in a 'definition' subfolder",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      }
+    },
+    "required": [
+      "request"
+    ]
+  }
+}

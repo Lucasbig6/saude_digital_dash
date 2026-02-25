@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atendimentos Eletro — Monitoramento Saúde Digital · Piauí</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --pi-green: #217D40;
+            --pi-blue: #1A5FA8;
+            --pi-yellow: #E8A900;
+            --pi-red: #C0392B;
+            --bg: #F4F6F9;
+            --surface: #FFFFFF;
+            --border: #E2E8F0;
+            --text-main: #1E293B;
+            --text-sub: #64748B;
+            --text-muted: #94A3B8;
+            --radius: 14px;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 28px 32px;
+        }
+
+        /* ── HEADER ─────────────────────────────────── */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .pi-stripe {
+            width: 5px;
+            height: 52px;
+            border-radius: 99px;
+            background: linear-gradient(180deg, var(--pi-green) 0%, var(--pi-blue) 50%, var(--pi-yellow) 100%);
+            flex-shrink: 0;
+        }
+
+        .header-text h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+
+        .header-text p {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-top: 3px;
+        }
+
+        .gov-badge {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-sub);
+        }
+
+        .gov-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--pi-green);
+            box-shadow: 0 0 0 3px rgba(33, 125, 64, 0.15);
+        }
+
+        /* ── KPIs ─────────────────────────────────── */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .kpi {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.18s, box-shadow 0.18s;
+        }
+
+        .kpi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .kpi-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-top: 6px;
+            line-height: 1;
+        }
+
+        .kpi-sub {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        /* ── FILTERS ─────────────────────────────── */
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-sub);
+            margin-right: 4px;
+        }
+
+        .filter-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-sub);
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--pi-blue);
+            color: var(--pi-blue);
+            background: rgba(26, 95, 168, 0.06);
+        }
+
+        .filter-btn.active {
+            background: var(--pi-blue);
+            border-color: var(--pi-blue);
+            color: #fff;
+        }
+
+        /* ── CHART CARDS ─────────────────────────── */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+
+        .chart-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 26px;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .chart-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--icon-bg, rgba(33, 125, 64, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .chart-card-header h2 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .chart-card-header p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        canvas {
+            max-height: 340px;
+        }
+
+        /* ── INFO CALLOUT ─────────────────────────── */
+        .callout {
+            display: flex;
+            gap: 10px;
+            background: rgba(26, 95, 168, 0.05);
+            border-left: 3px solid var(--pi-blue);
+            border-radius: 0 8px 8px 0;
+            padding: 12px 14px;
+            margin-top: 14px;
+            font-size: 12.5px;
+            color: var(--text-sub);
+            line-height: 1.7;
+        }
+
+        .callout strong {
+            color: var(--text-main);
+        }
+
+        /* ── FOOTER ─────────────────────────────── */
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .footer-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        @media (max-width: 640px) {
+            .two-cols {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 16px;
+            }
+
+            .gov-badge {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="pi-stripe"></div>
+        <div class="header-text">
+            <h1>⚡ Atendimentos em Eletro — Telediagnóstico</h1>
+            <p>tb_atendimentos_telemedicina · Governo do Estado do Piauí · Feb/2023 – Feb/2026</p>
+        </div>
+        <div class="gov-badge">
+            <div class="gov-dot"></div>
+            Dados ao vivo via Power BI MCP
+        </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+        <div class="kpi" style="--accent: var(--pi-blue)">
+            <div class="kpi-label">Eletrocardiograma · Total</div>
+            <div class="kpi-value">399.253</div>
+            <div class="kpi-sub">atendimentos registrados</div>
+        </div>
+        <div class="kpi" style="--accent: var(--pi-green)">
+            <div class="kpi-label">Eletroencefalograma · Total</div>
+            <div class="kpi-value">990</div>
+            <div class="kpi-sub">atendimentos registrados</div>
+        </div>
+        <div class="kpi" style="--accent: var(--pi-yellow)">
+            <div class="kpi-label">Pico mensal — ECG</div>
+            <div class="kpi-value">32.846</div>
+            <div class="kpi-sub">Novembro de 2025</div>
+        </div>
+        <div class="kpi" style="--accent: var(--pi-red)">
+            <div class="kpi-label">Crescimento total ECG</div>
+            <div class="kpi-value">+8.200%</div>
+            <div class="kpi-sub">Dez/2023 → Nov/2025</div>
+        </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+        <span class="filter-label">Filtrar por ano:</span>
+        <button class="filter-btn active" onclick="showYear('all', this)">Todos</button>
+        <button class="filter-btn" onclick="showYear('2023', this)">2023</button>
+        <button class="filter-btn" onclick="showYear('2024', this)">2024</button>
+        <button class="filter-btn" onclick="showYear('2025', this)">2025</button>
+        <button class="filter-btn" onclick="showYear('2026', this)">2026</button>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-grid">
+
+        <!-- Main chart -->
+        <div class="chart-card">
+            <div class="chart-card-header">
+                <div class="chart-icon" style="--icon-bg: rgba(26,95,168,0.1)">📈</div>
+                <div>
+                    <h2>Evolução mensal — Eletrocardiograma</h2>
+                    <p>Volume de atendimentos por mês</p>
+                </div>
+            </div>
+            <canvas id="ecgChart"></canvas>
+            <div class="callout">
+                � O Eletrocardiograma representa <strong>99,75%</strong> de todos os atendimentos Eletro.
+                Crescimento expressivo a partir de <strong>Mar/2024</strong>, com pico em <strong>Nov/2025
+                    (32.846)</strong>.
+                Dec/2025 e Fev/2026 mostram queda esperada por sazonalidade.
+            </div>
+        </div>
+
+        <!-- Bottom row -->
+        <div class="two-cols">
+
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <div class="chart-icon" style="--icon-bg: rgba(33,125,64,0.1)">📊</div>
+                    <div>
+                        <h2>Eletroencefalograma por mês</h2>
+                        <p>Volume absoluto (escala separada)</p>
+                    </div>
+                </div>
+                <canvas id="eegChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <div class="chart-icon" style="--icon-bg: rgba(232,169,0,0.1)">📉</div>
+                    <div>
+                        <h2>Variação % mensal — ECG</h2>
+                        <p>Crescimento ou queda em relação ao mês anterior</p>
+                    </div>
+                </div>
+                <canvas id="growthChart"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        <span>Governo do Estado do Piauí</span>
+        <div class="footer-dot"></div>
+        <span>Monitoramento Saúde Digital</span>
+        <div class="footer-dot"></div>
+        <span id="gen-date"></span>
+    </div>
+
+    <script>
+        const PI_BLUE = '#1A5FA8';
+        const PI_GREEN = '#217D40';
+        const PI_YELLOW = '#E8A900';
+        const PI_RED = '#C0392B';
+        const GRID_COLOR = 'rgba(0,0,0,0.06)';
+        const TEXT_COLOR = '#64748B';
+
+        const rawRows = [
+            { spec: "Eletrocardiograma", anoMes: "202302", qtd: 170 },
+            { spec: "Eletrocardiograma", anoMes: "202303", qtd: 697 },
+            { spec: "Eletrocardiograma", anoMes: "202304", qtd: 298 },
+            { spec: "Eletrocardiograma", anoMes: "202305", qtd: 372 },
+            { spec: "Eletrocardiograma", anoMes: "202306", qtd: 219 },
+            { spec: "Eletrocardiograma", anoMes: "202307", qtd: 280 },
+            { spec: "Eletrocardiograma", anoMes: "202308", qtd: 650 },
+            { spec: "Eletrocardiograma", anoMes: "202309", qtd: 476 },
+            { spec: "Eletrocardiograma", anoMes: "202310", qtd: 572 },
+            { spec: "Eletrocardiograma", anoMes: "202311", qtd: 557 },
+            { spec: "Eletrocardiograma", anoMes: "202312", qtd: 397 },
+            { spec: "Eletrocardiograma", anoMes: "202401", qtd: 496 },
+            { spec: "Eletrocardiograma", anoMes: "202402", qtd: 998 },
+            { spec: "Eletrocardiograma", anoMes: "202403", qtd: 2035 },
+            { spec: "Eletrocardiograma", anoMes: "202404", qtd: 3944 },
+            { spec: "Eletrocardiograma", anoMes: "202405", qtd: 4974 },
+            { spec: "Eletrocardiograma", anoMes: "202406", qtd: 5812 },
+            { spec: "Eletrocardiograma", anoMes: "202407", qtd: 9080 },
+            { spec: "Eletrocardiograma", anoMes: "202408", qtd: 14237 },
+            { spec: "Eletrocardiograma", anoMes: "202409", qtd: 16898 },
+            { spec: "Eletrocardiograma", anoMes: "202410", qtd: 15583 },
+            { spec: "Eletrocardiograma", anoMes: "202411", qtd: 15749 },
+            { spec: "Eletrocardiograma", anoMes: "202412", qtd: 10495 },
+            { spec: "Eletrocardiograma", anoMes: "202501", qtd: 11185 },
+            { spec: "Eletrocardiograma", anoMes: "202502", qtd: 16391 },
+            { spec: "Eletrocardiograma", anoMes: "202503", qtd: 16868 },
+            { spec: "Eletrocardiograma", anoMes: "202504", qtd: 18841 },
+            { spec: "Eletrocardiograma", anoMes: "202505", qtd: 20210 },
+            { spec: "Eletrocardiograma", anoMes: "202506", qtd: 20326 },
+            { spec: "Eletrocardiograma", anoMes: "202507", qtd: 22362 },
+            { spec: "Eletrocardiograma", anoMes: "202508", qtd: 22521 },
+            { spec: "Eletrocardiograma", anoMes: "202509", qtd: 25075 },
+            { spec: "Eletrocardiograma", anoMes: "202510", qtd: 26718 },
+            { spec: "Eletrocardiograma", anoMes: "202511", qtd: 32846 },
+            { spec: "Eletrocardiograma", anoMes: "202512", qtd: 19784 },
+            { spec: "Eletrocardiograma", anoMes: "202601", qtd: 23646 },
+            { spec: "Eletrocardiograma", anoMes: "202602", qtd: 17501 },
+            { spec: "Eletroencefalograma", anoMes: "202409", qtd: 19 },
+            { spec: "Eletroencefalograma", anoMes: "202410", qtd: 16 },
+            { spec: "Eletroencefalograma", anoMes: "202411", qtd: 75 },
+            { spec: "Eletroencefalograma", anoMes: "202412", qtd: 34 },
+            { spec: "Eletroencefalograma", anoMes: "202501", qtd: 95 },
+            { spec: "Eletroencefalograma", anoMes: "202502", qtd: 24 },
+            { spec: "Eletroencefalograma", anoMes: "202503", qtd: 74 },
+            { spec: "Eletroencefalograma", anoMes: "202504", qtd: 69 },
+            { spec: "Eletroencefalograma", anoMes: "202505", qtd: 74 },
+            { spec: "Eletroencefalograma", anoMes: "202506", qtd: 31 },
+            { spec: "Eletroencefalograma", anoMes: "202507", qtd: 143 },
+            { spec: "Eletroencefalograma", anoMes: "202508", qtd: 106 },
+            { spec: "Eletroencefalograma", anoMes: "202509", qtd: 48 },
+            { spec: "Eletroencefalograma", anoMes: "202510", qtd: 25 },
+            { spec: "Eletroencefalograma", anoMes: "202511", qtd: 61 },
+            { spec: "Eletroencefalograma", anoMes: "202512", qtd: 56 },
+            { spec: "Eletroencefalograma", anoMes: "202601", qtd: 33 },
+            { spec: "Eletroencefalograma", anoMes: "202602", qtd: 7 },
+        ];
+
+        const MONTH_NAMES = {
+            "01": "Jan", "02": "Fev", "03": "Mar", "04": "Abr", "05": "Mai", "06": "Jun",
+            "07": "Jul", "08": "Ago", "09": "Set", "10": "Out", "11": "Nov", "12": "Dez"
+        };
+
+        const label = m => `${MONTH_NAMES[m.slice(4)]} ${m.slice(0, 4)}`;
+        const allMonths = [...new Set(rawRows.map(r => r.anoMes))].sort();
+
+        function getData(year) {
+            const months = year === 'all' ? allMonths : allMonths.filter(m => m.startsWith(year));
+            const get = (spec, m) => (rawRows.find(r => r.spec === spec && r.anoMes === m) || { qtd: null }).qtd;
+            return {
+                labels: months.map(label),
+                ecg: months.map(m => get("Eletrocardiograma", m)),
+                eeg: months.map(m => get("Eletroencefalograma", m)),
+            };
+        }
+
+        // Defaults
+        Chart.defaults.color = TEXT_COLOR;
+        Chart.defaults.borderColor = GRID_COLOR;
+        Chart.defaults.font.family = 'Inter';
+        Chart.defaults.font.size = 11;
+
+        const TOOLTIP_STYLE = {
+            backgroundColor: '#1E293B',
+            titleColor: '#F1F5F9',
+            bodyColor: '#CBD5E1',
+            borderColor: 'rgba(255,255,255,0.1)',
+            borderWidth: 1,
+            padding: 12,
+            cornerRadius: 10,
+            callbacks: {
+                label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y !== null ? ctx.parsed.y.toLocaleString('pt-BR') : '—'} atend.`
+            }
+        };
+
+        let ecgChart, eegChart, growthChart;
+
+        function initCharts() {
+            const d = getData('all');
+
+            // ── ECG Line ──────────────────────
+            const ctx1 = document.getElementById('ecgChart').getContext('2d');
+            const grad = ctx1.createLinearGradient(0, 0, 0, 320);
+            grad.addColorStop(0, 'rgba(26,95,168,0.18)');
+            grad.addColorStop(1, 'rgba(26,95,168,0.01)');
+
+            ecgChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: d.labels,
+                    datasets: [{
+                        label: 'Eletrocardiograma',
+                        data: d.ecg,
+                        borderColor: PI_BLUE,
+                        backgroundColor: grad,
+                        borderWidth: 2.5,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: PI_BLUE,
+                        pointBorderWidth: 2,
+                        tension: 0.35,
+                        fill: true,
+                        spanGaps: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: TOOLTIP_STYLE,
+                    },
+                    scales: {
+                        x: { ticks: { maxRotation: 45 }, grid: { color: GRID_COLOR } },
+                        y: {
+                            ticks: { callback: v => v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v },
+                            grid: { color: GRID_COLOR }
+                        }
+                    }
+                }
+            });
+
+            // ── EEG Bar ──────────────────────
+            const eegMonths = allMonths.filter(m => rawRows.some(r => r.spec === "Eletroencefalograma" && r.anoMes === m));
+            const eegVals = eegMonths.map(m => rawRows.find(r => r.spec === "Eletroencefalograma" && r.anoMes === m)?.qtd ?? null);
+
+            eegChart = new Chart(document.getElementById('eegChart'), {
+                type: 'bar',
+                data: {
+                    labels: eegMonths.map(label),
+                    datasets: [{
+                        label: 'Eletroencefalograma',
+                        data: eegVals,
+                        backgroundColor: 'rgba(33,125,64,0.75)',
+                        borderColor: PI_GREEN,
+                        borderWidth: 1.5,
+                        borderRadius: 5,
+                        hoverBackgroundColor: PI_GREEN,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false }, tooltip: TOOLTIP_STYLE },
+                    scales: {
+                        x: { ticks: { maxRotation: 45 }, grid: { color: GRID_COLOR } },
+                        y: { ticks: { callback: v => v }, grid: { color: GRID_COLOR } }
+                    }
+                }
+            });
+
+            // ── Growth % Bar ─────────────────
+            const ecgRowsSorted = allMonths
+                .filter(m => rawRows.some(r => r.spec === "Eletrocardiograma" && r.anoMes === m))
+                .map(m => rawRows.find(r => r.spec === "Eletrocardiograma" && r.anoMes === m));
+
+            const gLabels = [], gData = [];
+            for (let i = 1; i < ecgRowsSorted.length; i++) {
+                const prev = ecgRowsSorted[i - 1].qtd, curr = ecgRowsSorted[i].qtd;
+                if (prev && curr) {
+                    gLabels.push(label(ecgRowsSorted[i].anoMes));
+                    gData.push(parseFloat(((curr - prev) / prev * 100).toFixed(1)));
+                }
+            }
+
+            growthChart = new Chart(document.getElementById('growthChart'), {
+                type: 'bar',
+                data: {
+                    labels: gLabels,
+                    datasets: [{
+                        label: 'Variação %',
+                        data: gData,
+                        backgroundColor: gData.map(v => v >= 0 ? 'rgba(33,125,64,0.7)' : 'rgba(192,57,43,0.7)'),
+                        borderColor: gData.map(v => v >= 0 ? PI_GREEN : PI_RED),
+                        borderWidth: 1.5,
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { ...TOOLTIP_STYLE, callbacks: { label: ctx => ` ${ctx.parsed.y}%` } }
+                    },
+                    scales: {
+                        x: { ticks: { maxRotation: 45 }, grid: { color: GRID_COLOR } },
+                        y: { ticks: { callback: v => `${v}%` }, grid: { color: GRID_COLOR } }
+                    }
+                }
+            });
+        }
+
+        function showYear(year, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const d = getData(year);
+            ecgChart.data.labels = d.labels;
+            ecgChart.data.datasets[0].data = d.ecg;
+            ecgChart.update('active');
+        }
+
+        initCharts();
+        document.getElementById('gen-date').textContent = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+    </script>
+</body>
+
+</html>

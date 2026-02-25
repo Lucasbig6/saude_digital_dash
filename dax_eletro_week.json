@@ -1,0 +1,12 @@
+{
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":false,\"message\":\"DAX query execution failed: Query (6, 7) N\\u00E3o \\u00E9 poss\\u00EDvel determinar um \\u00FAnico valor para\\u00A0a coluna \\u0027data_registro\\u0027 na tabela \\u0027tb_atendimentos_telemedicina\\u0027. Isso pode acontecer quando uma f\\u00F3rmula de medida ou fun\\u00E7\\u00E3o se refere a uma coluna que cont\\u00E9m muitos valores sem especificar uma agrega\\u00E7\\u00E3o como min, max, count ou sum para obter um \\u00FAnico resultado.\",\"operation\":\"EXECUTE\",\"data\":{\"success\":false,\"errorMessage\":\"Query (6, 7) N\\u00E3o \\u00E9 poss\\u00EDvel determinar um \\u00FAnico valor para\\u00A0a coluna \\u0027data_registro\\u0027 na tabela \\u0027tb_atendimentos_telemedicina\\u0027. Isso pode acontecer quando uma f\\u00F3rmula de medida ou fun\\u00E7\\u00E3o se refere a uma coluna que cont\\u00E9m muitos valores sem especificar uma agrega\\u00E7\\u00E3o como min, max, count ou sum para obter um \\u00FAnico resultado.\",\"rowCount\":0,\"columns\":[],\"rows\":[],\"executionTimeMs\":16}}"
+      }
+    ]
+  },
+  "id": 4,
+  "jsonrpc": "2.0"
+}
